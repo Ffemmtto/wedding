@@ -1,0 +1,167 @@
+{% extends 'invite/base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Анимация Конверта -->
+<div id="envelope-wrapper">
+    <div class="envelope">
+        <div class="flap"></div>
+        <div class="pocket"></div>
+        <div class="letter">
+            <h2>Руслан & Дана</h2>
+            <p>27.04.2026</p>
+        </div>
+    </div>
+    <div class="tap-hint">Нажмите, чтобы открыть</div>
+</div>
+
+<main id="main-content" class="hidden">
+    <!-- Hero Section -->
+    <section class="hero" style="position: relative;">
+        <!-- Фоновые украшения первого экрана -->
+        <img src="{% static 'invite/img/gold_dust.png' %}" class="decor gold-dust" alt="">
+        <img src="{% static 'invite/img/floral_branch.png' %}" class="decor hero-branch" alt="">
+        
+        <div class="hero-content fade-in">
+            <!-- Арка за текстом -->
+            <img src="{% static 'invite/img/arch_bg.png' %}" class="decor hero-arch" alt="">
+            <div class="hero-text-wrapper">
+                <h1 class="names">Руслан & Дана</h1>
+                <p class="subtitle">Приглашают вас разделить с ними этот особенный день!</p>
+            </div>
+        </div>
+    </section>
+
+<!-- ========================= -->
+    <!-- НОВЫЙ БЛОК: ТЕКСТ ПРИГЛАШЕНИЯ -->
+    <!-- ========================= -->
+    <section class="welcome-section fade-in">
+        <div class="container">
+            <div class="welcome-text">
+                <!-- <p>Руслан и Дана с радостью приглашают вас стать частью особенного дня — дня их свадьбы.</p> -->
+                <p>В этот важный и трогательный момент они хотят быть окружены самыми близкими и дорогими людьми, чтобы вместе разделить радость, улыбки и искренние эмоции.</p>
+                <p>Будет много тёплых слов, счастливых взглядов и незабываемых мгновений, которые останутся в памяти на всю жизнь.</p>
+                <p class="highlight">Ваше присутствие сделает этот день по-настоящему полным и особенным!</p>
+            </div>
+        </div>
+    </section>
+    <!-- ========================= -->
+
+    <!-- Date & Timer -->
+    <section class="datetime-section glass" style="position: relative;">
+        <!-- Кольца на верхней границе таймера -->
+        <img src="{% static 'invite/img/rings.png' %}" class="decor rings-top" alt="">
+        
+        <div class="container fade-in">
+            <h2 class="section-title">Начало мероприятия</h2>
+            <p class="date">27 апреля 2026</p>
+            <p class="time">Сбор гостей: 17:00</p>
+            
+            <div class="timer" id="countdown">
+                <div class="time-box"><span id="days">00</span><p>Дней</p></div>
+                <div class="time-box"><span id="hours">00</span><p>Часов</p></div>
+                <div class="time-box"><span id="minutes">00</span><p>Минут</p></div>
+                <div class="time-box"><span id="seconds">00</span><p>Секунд</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Location -->
+    <section class="location-section" style="position: relative;">
+        <!-- Акварельное пятно на фоне локации -->
+        <img src="{% static 'invite/img/watercolor.png' %}" class="decor location-watercolor" alt="">
+        
+        <div class="container fade-in" style="position: relative; z-index: 2;">
+            <h2 class="section-title">Место проведения</h2>
+            <p class="venue">Ресторан "Royal Rose"</p>
+            <p class="address">Кульджинский тракт, 26/4</p>
+            
+            <div class="map-container glass">
+                <a class="dg-widget-link" href="https://2gis.kz/almaty/firm/70000001093728642/center/77.035326,43.329644/zoom/16">Посмотреть на карте</a>
+                <script charset="utf-8" src="https://widgets.2gis.com/js/DGWidgetLoader.js"></script>
+                <script charset="utf-8">
+                    new DGWidgetLoader({
+                        "width": "100%",
+                        "height": 400,
+                        "borderColor": "none",
+                        "pos": {"lat": 43.329644, "lon": 77.035326, "zoom": 16},
+                        "opt": {"city": "almaty"},
+                        "org":[{"id": "70000001093728642"}]
+                    });
+                </script>
+            </div>
+
+            <div class="map-actions">
+                <a href="https://2gis.kz/almaty/geo/70000001093728642/77.035326,43.329644" target="_blank" class="btn-outline">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 8px;">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                        <circle cx="12" cy="10" r="3"></circle>
+                    </svg>
+                    Открыть в приложении 2GIS
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- RSVP & Wishes -->
+    <section class="forms-section" style="position: relative; padding-bottom: 80px;">
+        <!-- Декорации по углам секции форм -->
+        <img src="{% static 'invite/img/rings_box.png' %}" class="decor box-bottom-left" alt="">
+        <img src="{% static 'invite/img/dove.png' %}" class="decor dove-bottom-right" alt="">
+
+        <div class="container double-grid" style="position: relative; z-index: 2;">
+            <!-- RSVP -->
+            <div class="form-card glass fade-in">
+                <h2 class="section-title">Дорогой гость,</h2>
+                <p>Просим, подтвердить ваше участие</p>
+                <form id="rsvpForm" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="rsvp_submit" value="1">
+                    <div class="input-group">
+                        <input type="text" name="first_name" placeholder="Имя" required>
+                    </div>
+                    <div class="input-group">
+                        <input type="text" name="last_name" placeholder="Фамилия" required>
+                    </div>
+                    <div class="input-group">
+                        <select name="status" required>
+                            <option value="" disabled selected>Сможете ли вы прийти?</option>
+                            <option value="yes">Да, приду</option>
+                            <option value="with_spouse">Приду с супругой/ом</option>
+                            <option value="no">Нет, не приду</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn">Отправить ответ</button>
+                    <p class="form-msg" id="rsvp-msg"></p>
+                </form>
+            </div>
+
+            <!-- Wishes -->
+            <div class="form-card glass fade-in">
+                <h2 class="section-title">Пожелания</h2>
+                <form id="wishForm" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="wish_submit" value="1">
+                    <div class="input-group">
+                        <input type="text" name="name" placeholder="Ваше имя" required>
+                    </div>
+                    <div class="input-group">
+                        <textarea name="text" rows="3" placeholder="Ваши теплые слова..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn">Оставить пожелание</button>
+                    <p class="form-msg" id="wish-msg"></p>
+                </form>
+
+                <div class="wishes-list" id="wishes-container">
+                    {% for wish in wishes %}
+                        <div class="wish-item">
+                            <h4>{{ wish.name }}</h4>
+                            <p>{{ wish.text }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock %}

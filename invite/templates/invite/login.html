@@ -1,0 +1,18 @@
+{% extends 'invite/base.html' %}
+{% block content %}
+<div class="login-wrapper">
+    <div class="form-card glass login-card">
+        <h2 class="section-title">Вход для организаторов</h2>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="input-group">
+                <input type="text" name="username" placeholder="Логин" required>
+            </div>
+            <div class="input-group">
+                <input type="password" name="password" placeholder="Пароль" required>
+            </div>
+            <button type="submit" class="btn">Войти</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

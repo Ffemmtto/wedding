@@ -1,0 +1,87 @@
+{% extends 'invite/base.html' %}
+{% block content %}
+<div class="admin-wrapper">
+    <nav class="admin-nav glass">
+        <h2 class="names" style="font-size: 2rem;">R & D Dashboard</h2>
+        <a href="{% url 'logout' %}" class="btn" style="padding: 10px 20px;">Выйти</a>
+    </nav>
+
+    <div class="admin-stats container">
+        <div class="stat-card glass">
+            <h3>Придут (всего)</h3>
+            <div class="num">{{ total_attending }}</div>
+        </div>
+        <div class="stat-card glass">
+            <h3>Один</h3>
+            <div class="num">{{ total_yes }}</div>
+        </div>
+        <div class="stat-card glass">
+            <h3>Парой</h3>
+            <div class="num">{{ total_spouse }}</div>
+        </div>
+        <div class="stat-card glass" style="border-left: 4px solid #cc6666;">
+            <h3>Отказ</h3>
+            <div class="num">{{ total_no }}</div>
+        </div>
+    </div>
+
+    <div class="container double-grid" style="margin-top: 2rem;">
+        <!-- Таблица гостей -->
+        <div class="form-card glass admin-table-container">
+            <h2 class="section-title">Список гостей</h2>
+            <input type="text" id="guestSearch" class="admin-search" placeholder="Поиск по имени...">
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>Имя</th>
+                        <th>Фамилия</th>
+                        <th>Статус</th>
+                        <th style="text-align: right;">Действия</th> <!-- Добавили колонку -->
+                    </tr>
+                </thead>
+                <tbody id="guestTableBody">
+                    {% for guest in guests %}
+                    <tr class="guest-row">
+                        <td>{{ guest.first_name }}</td>
+                        <td>{{ guest.last_name }}</td>
+                        <td>
+                            {% if guest.status == 'yes' %}<span class="badge green">Да</span>
+                            {% elif guest.status == 'with_spouse' %}<span class="badge gold">С парой</span>
+                            {% else %}<span class="badge red">Нет</span>{% endif %}
+                        </td>
+                        <td style="text-align: right; white-space: nowrap;">
+                            <a href="{% url 'edit_guest' guest.pk %}" class="action-btn" title="Редактировать">✏️</a>
+                            <form action="{% url 'delete_guest' guest.pk %}" method="POST" style="display:inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="action-btn" title="Удалить" onclick="return confirm('Вы уверены, что хотите удалить этого гостя?');">🗑️</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Пожелания -->
+        <div class="form-card glass">
+            <h2 class="section-title">Пожелания</h2>
+            <div class="admin-wishes">
+                {% for wish in wishes %}
+                <div class="wish-item admin-wish">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <h4 style="margin: 0;">{{ wish.name }} <span class="date-small">{{ wish.created_at|date:"d.m.Y" }}</span></h4>
+                        <form action="{% url 'delete_wish' wish.pk %}" method="POST" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="action-btn" title="Удалить пожелание" onclick="return confirm('Удалить это пожелание?');">🗑️</button>
+                        </form>
+                    </div>
+                    <p style="margin: 0;">{{ wish.text }}</p>
+                </div>
+                {% empty %}
+                <p>Пока нет пожеланий.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

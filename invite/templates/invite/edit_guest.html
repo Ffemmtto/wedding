@@ -1,0 +1,26 @@
+{% extends 'invite/base.html' %}
+{% block content %}
+<div class="login-wrapper">
+    <div class="form-card glass login-card">
+        <h2 class="section-title">Редактировать гостя</h2>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="input-group">
+                <input type="text" name="first_name" value="{{ form.first_name.value|default_if_none:'' }}" required placeholder="Имя">
+            </div>
+            <div class="input-group">
+                <input type="text" name="last_name" value="{{ form.last_name.value|default_if_none:'' }}" required placeholder="Фамилия">
+            </div>
+            <div class="input-group">
+                <select name="status" required>
+                    <option value="yes" {% if form.status.value == 'yes' %}selected{% endif %}>Да, приду</option>
+                    <option value="with_spouse" {% if form.status.value == 'with_spouse' %}selected{% endif %}>Приду с супругой/ом</option>
+                    <option value="no" {% if form.status.value == 'no' %}selected{% endif %}>Нет, не приду</option>
+                </select>
+            </div>
+            <button type="submit" class="btn" style="margin-bottom: 10px;">Сохранить изменения</button>
+            <a href="{% url 'dashboard' %}" class="btn" style="background: transparent; color: var(--color-text); border: 1px solid var(--color-gold); display: block; text-decoration: none;">Отмена</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

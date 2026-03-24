@@ -1,0 +1,13 @@
+# Python / Django
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+env/
+.env
+
+# База данных
+db.sqlite3
+
+# Mac OS
+.DS_Store
