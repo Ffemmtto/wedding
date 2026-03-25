@@ -4,7 +4,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Свадьба Руслана и Даны</title>
+    
+    <!-- Базовые теги -->
+    <title>Свадьба Руслана и Даны | 27.04.2026</title>
+    <meta name="description" content="Приглашаем вас разделить с нами этот особенный день.">
+
+    <!-- Open Graph (WhatsApp, Telegram, Facebook, VK) -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">
+    <meta property="og:title" content="Свадьба Руслана и Даны 🤍">
+    <meta property="og:description" content="Приглашаем вас разделить с нами этот особенный день! 27 апреля 2026 года.">
+    <!-- Ссылка на картинку обязательно должна быть абсолютной -->
+    <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'invite/img/og_banner.png' %}">
+
+    <!-- Twitter / X Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Свадьба Руслана и Даны 🤍">
+    <meta name="twitter:description" content="Приглашаем вас разделить с нами этот особенный день! 27 апреля 2026 года.">
+    <meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'invite/img/og_banner.png' %}">
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
