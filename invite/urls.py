@@ -6,7 +6,7 @@ urlpatterns =[
     path('', views.index, name='index'),
     path('dashboard/', views.dashboard, name='dashboard'),
     path('login/', views.CustomLoginView.as_view(), name='login'),
-    path('logout/', LogoutView.as_view(next_page='login'), name='logout'),
+    path('logout/', LogoutView.as_view(template_name='invite/logout.html'), name='logout'),
     
     # Новые пути для редактирования и удаления
     path('guest/<int:pk>/edit/', views.edit_guest, name='edit_guest'),
